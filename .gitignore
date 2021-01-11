@@ -1,0 +1,16 @@
+dataset/cars/*
+dataset/cub/*
+temp
+tmp
+*tmp
+*_tmp
+*_temp
+*.jpg
+*.png
+
+.idea/*
+*.h5
+*.checkpoint
+*__pycache__*
+*.pyc
+*.pyo
