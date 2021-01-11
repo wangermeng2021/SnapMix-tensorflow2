@@ -5,7 +5,7 @@ tensorflow2 implementation of SnapMix as described in [SnapMix: Semantically Pro
 ## Installation
 ###  1. Clone project
   ``` 
-  git clone https://github.com/wangermeng2021/SnapMix-tensorflow2
+  git clone https://github.com/wangermeng2021/SnapMix-tensorflow2.git
   cd SnapMix-tensorflow2
   ```
 
