@@ -3,16 +3,16 @@
 tensorflow2 implementation of SnapMix as described in [SnapMix: Semantically Proportional Mixing for Augmenting Fine-grained Data](https://arxiv.org/abs/2012.04846)
 
 ## Installation
-###  1. Install environment
+###  1. Clone project
+  ``` 
+  git clone https://github.com/wangermeng2021/SnapMix-tensorflow2
+  cd SnapMix-tensorflow2
+  ```
+
+###   2. Install environment
   ```
   pip install -r requirements.txt
   ```
-
-###   2. Clone project
-```
-git clone https://github.com/wangermeng2021/SnapMix-tensorflow2
-cd SnapMix-tensorflow2
-```
 
 ###   3. Download dataset
 * Download cub dataset
