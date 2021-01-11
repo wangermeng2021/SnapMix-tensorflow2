@@ -1,6 +1,0 @@
-opencv-python==4.2.0.32
-tensorflow==2.3.0
-tqdm
-Pillow
-scipy
-albumentations

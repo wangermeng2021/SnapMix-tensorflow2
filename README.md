@@ -17,8 +17,9 @@ tensorflow2 implementation of SnapMix as described in [SnapMix: Semantically Pro
 ###   3. Download dataset
 * Download cub dataset
   ```
-  wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz -P dataset/cub/
-  tar -xzf dataset/cub/CUB_200_2011.tgz -C dataset/cub
+  wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz -P dataset/
+  tar -xzf dataset/cub/CUB_200_2011.tgz -C dataset/
+  mv dataset/CUB_200_2011 dataset/cub
   rm dataset/cub/CUB_200_2011.tgz
   ```
 * Download cars dataset
