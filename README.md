@@ -20,7 +20,6 @@ tensorflow2 implementation of SnapMix as described in [SnapMix: Semantically Pro
   wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz -P dataset/
   tar -xzf dataset/cub/CUB_200_2011.tgz -C dataset/
   mv dataset/CUB_200_2011 dataset/cub
-  rm dataset/cub/CUB_200_2011.tgz
   ```
 * Download cars dataset
   ```
@@ -31,9 +30,6 @@ tensorflow2 implementation of SnapMix as described in [SnapMix: Semantically Pro
   tar -xzf  dataset/cars/cars_test.tgz -C dataset/cars
   tar -xzf  dataset/cars/car_devkit.tgz -C dataset/cars
   wget http://imagenet.stanford.edu/internal/car196/cars_test_annos_withlabels.mat -P dataset/cars/devkit/
-  rm dataset/cars/cars_train.tgz
-  rm dataset/cars/cars_test.tgz
-  rm dataset/cars/car_devkit.tgz
   ```
 
 ## Training
