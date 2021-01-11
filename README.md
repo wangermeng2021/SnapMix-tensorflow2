@@ -1,6 +1,6 @@
 
 # SnapMix-tensorflow2
-tensorflow2 implementation of SnapMix as described in [SnapMix: Semantically Proportional Mixing for Augmenting Fine-grained Data](https://arxiv.org/abs/2012.04846)
+A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically Proportional Mixing for Augmenting Fine-grained Data](https://arxiv.org/abs/2012.04846)
 
 ## Installation
 ###  1. Clone project
