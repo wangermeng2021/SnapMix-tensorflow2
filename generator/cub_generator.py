@@ -11,10 +11,6 @@ from utils.mixup import mixup
 from utils.baseline_augment import resize_and_random_crop
 from utils.baseline_augment import resize_and_center_crop
 
-physical_devices = tf.config.list_physical_devices('GPU')
-if physical_devices:
-    tf.config.experimental.set_memory_growth(physical_devices[0],True)
-
 from scipy.io import loadmat
 def get_mat_frame(path, img_folder):
     results = {}
@@ -76,7 +72,6 @@ class CubGenerator(tf.keras.utils.Sequence):
             np.random.shuffle(self.data_index)
         self.eppch_index += 1
     def __len__(self):
-        # return 2
         return len(self.img_path_list) // self.batch_size
     def __getitem__(self, batch_index):
 
@@ -94,53 +89,19 @@ class CubGenerator(tf.keras.utils.Sequence):
             batch_imgs = np.array(batch_imgs)
         else:
             for i in range(self.batch_size):
-                # resized_img = cv2.imread(batch_img_paths[i]).astype(np.uint8)
                 img = self.read_img(batch_img_paths[i]).astype(np.uint8)
 
-                # resized_img = self.data_aug.albumentations(resized_img)
-                # resized_img =  self.auto_aug.distort(tf.constant(resized_img)).numpy()
-
                 resized_img = resize_and_random_crop(img, self.resize_size, self.crop_size)
-
-
-                # # resized_img = resized_img / 127.5-1.
-                # resized_img = resized_img.astype(np.float32)
-                # mean = [103.939, 116.779, 123.68]
-                # resized_img[..., 0] -= mean[0]
-                # resized_img[..., 1] -= mean[1]
-                # resized_img[..., 2] -= mean[2]
-                # resized_img = resized_img/255.
-                # np.asarray(resized_img).astype('float32')
-                # print(resized_img)
-                # cv2.imshow("d",resized_img)
-                # cv2.waitKey()
-                # plt.imshow(resized_img)
-                # plt.show()
-
                 batch_imgs.append(resized_img)
                 one_hot_batch_labels[i, batch_labels[i]] = 1
             batch_imgs = np.array(batch_imgs)
             # # if np.random.rand(1) < 0.5:
-            # if self.eppch_index>5:
             if self.augment == 'snapmix':
                 batch_imgs, one_hot_batch_labels = snapmix(batch_imgs,one_hot_batch_labels,self.last_conv_model,self.last_dense_layer,self.crop_size,5)
             elif self.augment == 'cutmix':
                 batch_imgs, one_hot_batch_labels = cutmix(batch_imgs,one_hot_batch_labels,3)
             elif self.augment == 'mixup':
                 batch_imgs, one_hot_batch_labels = mixup(batch_imgs,one_hot_batch_labels,1)
-            # print(one_hot_batch_labels[0])
-            # cv2.imshow("d1",batch_imgs[0])
-            # cv2.waitKey()
-            # test_img = cv2.imread("/home/wangem1/cam/cam_20201231_2/445.jpg")
-            # test_img = cv2.resize(test_img, (224, 224))
-            # test_img = np.expand_dims(test_img, axis=0)
-            # conv_out = self.last_conv_model.predict(test_img)
-            # car_cam = get_cam(conv_out, self.last_dense_layer,np.array([1]),tuple(self.img_size))
-            # car_cam = car_cam * 255
-            # car_cam = np.expand_dims(car_cam, -1)
-            # car_cam = car_cam.astype(np.uint8)
-            # cv2.imwrite("123/%f.jpg"%(time.time()),car_cam[0])
-
 
         return batch_imgs, one_hot_batch_labels
 

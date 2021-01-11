@@ -1,5 +1,4 @@
 # # from __future__ import print_function
-
 import cv2
 import numpy as np
 from utils.cam import get_cam
@@ -8,9 +7,6 @@ def get_random_box(img_size, area_ratio):
     side_length_ratio = np.sqrt(area_ratio)
     side_length = side_length_ratio*img_size
     side_length = side_length.astype(np.int32)
-    # assert any(side_length!=0)
-    # if side_length[0]==0 or side_length[1]==0:
-    #     assert 0
 
     half_side_length = side_length//2
     w_offset, h_offset = np.random.randint(0,img_size[0]), np.random.randint(0,img_size[1])
@@ -24,10 +20,6 @@ def snapmix(batch_imgs,batch_one_hot_labels,last_conv_model,last_dense_layer,img
     conv_out = last_conv_model.predict(batch_imgs)
     batch_labels = np.argmax(batch_one_hot_labels, axis=-1)
     car_cam = get_cam(conv_out, last_dense_layer, batch_labels, img_size)
-
-    # # car_cam1 = car_cam * 255
-    # # car_cam1 = car_cam1.astype(np.uint8)
-    # return car_cam,1
 
     img_size = np.array(img_size)
     beta1 = np.random.beta(beta,beta)
@@ -46,13 +38,6 @@ def snapmix(batch_imgs,batch_one_hot_labels,last_conv_model,last_dense_layer,img
     weight1[same_class_mask] += weight2[same_class_mask]
     weight2[same_class_mask] += weight1_copy[same_class_mask]
 
-    # weight2_1 = (box1[2] - box1[0]) * (box1[3] - box1[1]) / (img_size[0] * img_size[1])
-    # weight1_1  = 1.- weight2_1
-    # weight1_1 = np.tile(weight1_1,[car_cam.shape[0]])
-    # weight2_1 = np.tile(weight2_1, [car_cam.shape[0]])
-
-
-
     weight1 = np.reshape(weight1, [weight1.shape[0], 1])
     weight2 = np.reshape(weight2, [weight2.shape[0], 1])
 
@@ -62,8 +47,5 @@ def snapmix(batch_imgs,batch_one_hot_labels,last_conv_model,last_dense_layer,img
     for bi in range(num_batch):
         batch_imgs[:,box1[1]:box1[3],box1[0]:box1[2]][bi] = \
             cv2.resize(batch_imgs_copy[random_batch_indexs, box2[1]:box2[3], box2[0]:box2[2]][bi],(box1[2]-box1[0],box1[3]-box1[1]), interpolation=cv2.INTER_LINEAR)
-
-    # cv2.imshow("d1",batch_imgs[0])
-    # cv2.waitKey()
 
     return batch_imgs,batch_one_hot_labels

@@ -15,11 +15,11 @@ if physical_devices:
 def parse_args(args):
     parser = argparse.ArgumentParser(description='Simple training script for using snapmix .')
     parser.add_argument('--epochs', default=200, type=int)
-    parser.add_argument('--batch-size', default=12, type=int)
+    parser.add_argument('--batch-size', default=16, type=int)
     parser.add_argument('--dataset', default='cars', type=str, help="choices=['cub','cars']")
     parser.add_argument('--augment', default='snapmix', type=str, help="choices=['baseline','cutmix','snapmix']")
     parser.add_argument('--model', default='ResNet50', type=str, help="choices=['ResNet50','ResNet101','EfficientNetB0']")
-    parser.add_argument('--pretrain', default='resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5', help="choices=[None,'imagenet','resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5']")
+    parser.add_argument('--pretrain', default='imagenet', help="choices=[None,'imagenet','resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5']")
     parser.add_argument('--concat-max-and-average-pool', default=False, type=bool,help="Use concat_max_and_average_pool layer in model")
     parser.add_argument('--lr-scheduler', default='step', type=str, help="choices=['step','warmup_cosinedecay']")
     parser.add_argument('--init-lr', default=1e-3, type=float)
@@ -29,7 +29,7 @@ def parse_args(args):
     parser.add_argument('--warmup-epochs', default=0, type=int)
     parser.add_argument('--weight-decay', default=1e-4, type=float)
     return parser.parse_args(args)
-import cv2
+
 def main(args):
 
     train_generator, val_generator = get_generator(args)
@@ -66,9 +66,7 @@ def main(args):
                 "epoch:{}/{},train_loss:{:.4f},lr:{:.6f}".format(epoch + 1, args.epochs,
                                                                                  train_loss/(batch_index+1),
                                                                                  optimizer.learning_rate.numpy()))
-        # train_loss /= len(train_generator)
-        # logging.info("epoch:{}/{},train_loss:{},lr:{}".format(epoch + 1, args.epochs, train_loss,
-        #                                                       optimizer.learning_rate.numpy()))
+
         train_generator.on_epoch_end()
 
         # validation
