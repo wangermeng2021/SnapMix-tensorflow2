@@ -2,30 +2,22 @@
 
 # Installation
 ##  1. Install environment
-* Conda(recommend)<br>
-
-  This might be the simplest way to install tensorflow with cuda:
-  ```
-  conda env create -f conda-gpu.yml
-  conda activate snapmix-tensorflow2
-  ```
-* Pip
   ```
   pip install -r requirements.txt
   ```
-	PS: If you use pip installation，you may need to install cuda11 if you have not installed it,Because tensorflow2.4 require cuda11.
 
 ##   2. Clone project
 ```
-git clone https://github.com/wangermeng2021/snapmix-tensorflow2
-cd snapmix-tensorflow2
+git clone https://github.com/wangermeng2021/SnapMix-tensorflow2
+cd SnapMix-tensorflow2
 ```
 
 ##   3. Download dataset
 * Download cub dataset
   ```
-  wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz -P dataset/cars/
-  tar -xzf CUB_200_2011.tgz -C dataset/cub
+  wget http://www.vision.caltech.edu/visipedia-data/CUB-200-2011/CUB_200_2011.tgz -P dataset/cub/
+  tar -xzf dataset/cub/CUB_200_2011.tgz -C dataset/cub
+  rm dataset/cub/CUB_200_2011.tgz
   ```
 * Download cars dataset
   ```
@@ -36,6 +28,9 @@ cd snapmix-tensorflow2
   tar -xzf  dataset/cars/cars_test.tgz -C dataset/cars
   tar -xzf  dataset/cars/car_devkit.tgz -C dataset/cars
   wget http://imagenet.stanford.edu/internal/car196/cars_test_annos_withlabels.mat -P dataset/cars/devkit/
+  rm dataset/cars/cars_train.tgz
+  rm dataset/cars/cars_test.tgz
+  rm dataset/cars/car_devkit.tgz
   ```
 
 # Training

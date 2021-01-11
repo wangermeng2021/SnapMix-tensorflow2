@@ -14,15 +14,15 @@ if physical_devices:
 
 def parse_args(args):
     parser = argparse.ArgumentParser(description='Simple training script for using snapmix .')
-    parser.add_argument('--epochs', default=100, type=int)
+    parser.add_argument('--epochs', default=200, type=int)
     parser.add_argument('--batch-size', default=12, type=int)
-    parser.add_argument('--dataset', default='cub', type=str, help="choices=['cub','cars']")
+    parser.add_argument('--dataset', default='cars', type=str, help="choices=['cub','cars']")
     parser.add_argument('--augment', default='snapmix', type=str, help="choices=['baseline','cutmix','snapmix']")
     parser.add_argument('--model', default='ResNet50', type=str, help="choices=['ResNet50','ResNet101','EfficientNetB0']")
     parser.add_argument('--pretrain', default='resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5', help="choices=[None,'imagenet','resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5']")
     parser.add_argument('--concat-max-and-average-pool', default=False, type=bool,help="Use concat_max_and_average_pool layer in model")
-    parser.add_argument('--lr-scheduler', default='warmup_cosinedecay', type=str, help="choices=['step','warmup_cosinedecay']")
-    parser.add_argument('--init-lr', default=1e-4, type=float)
+    parser.add_argument('--lr-scheduler', default='step', type=str, help="choices=['step','warmup_cosinedecay']")
+    parser.add_argument('--init-lr', default=1e-3, type=float)
     parser.add_argument('--lr-decay', default=0.1, type=float)
     parser.add_argument('--lr-decay-epoch', default=[80, 150, 180], type=int)
     parser.add_argument('--warmup-lr', default=1e-4, type=float)
@@ -36,12 +36,12 @@ def main(args):
     model = get_model(args, train_generator.num_class)
     train_generator.set_model(model.keras_model)
     loss_object = tf.keras.losses.CategoricalCrossentropy()
-    # optimizer = tf.keras.optimizers.SGD(0.001, 0.9)
-    optimizer = tf.keras.optimizers.Adam(args.init_lr)
+    optimizer = tf.keras.optimizers.SGD(args.init_lr, 0.9)
+    # optimizer = tf.keras.optimizers.Adam(args.init_lr)
     lr_scheduler = get_lr_scheduler(args)
     best_val_loss = 100000
     best_val_acc = -1
-    start_val_epoch = 0
+    start_val_epoch = 50
 
     for epoch in range(args.epochs):
         lr = lr_scheduler(epoch)
