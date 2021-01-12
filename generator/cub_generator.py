@@ -54,6 +54,7 @@ class CubGenerator(tf.keras.utils.Sequence):
         self.last_conv_model = tf.keras.Model(inputs=model.inputs, outputs=model.get_layer('last_conv').output)
         self.last_dense_layer = model.get_layer('predictions')
     def resize(self, img, size):
+        size = np.array(size)
         img_width_height = img.shape[0:2][::-1]
         max_ratio = np.max(img_width_height / size)
         img_width_height = img_width_height / max_ratio
@@ -62,8 +63,11 @@ class CubGenerator(tf.keras.utils.Sequence):
         resized_img = cv2.resize(img, tuple(dst_size))
         pad_height = (size[1] - resized_img.shape[0]) // 2
         pad_width = (size[0] - resized_img.shape[1]) // 2
+
+        # cv2.copyMakeBorder(resized_img,pad_height, size[0] - pad_height - resized_img.shape[0], pad_width, size[1] - pad_width - resized_img.shape[1],cv2.BORDER_REPLICATE);
+
         return np.pad(resized_img, [[pad_height, size[0] - pad_height - resized_img.shape[0]],
-                                    [pad_width, size[1] - pad_width - resized_img.shape[1]], [0, 0]])
+                                    [pad_width, size[1] - pad_width - resized_img.shape[1]], [0,0]],constant_values=np.random.randint(0, 255))
     def read_img(self, path):
         image = np.ascontiguousarray(Image.open(path).convert('RGB'))
         return image
