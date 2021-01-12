@@ -2,6 +2,13 @@
 # SnapMix-tensorflow2
 A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically Proportional Mixing for Augmenting Fine-grained Data](https://arxiv.org/abs/2012.04846)
 
+## Evaluation results
+
+|  Backbone | Method | CUB   | Car    |  
+|:--------|:--------|--------:|------:|
+|Resnet-50 | Baseline| 82.35% |  91.15% |  
+|Resnet-50 | Baseline + SnapMix| 90.13% |  93.12% |
+
 ## Installation
 ###  1. Clone project
   ``` 
