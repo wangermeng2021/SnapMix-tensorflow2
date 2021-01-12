@@ -64,7 +64,7 @@ def main(args):
             train_loss += total_loss
             train_generator_tqdm.set_description(
                 "epoch:{}/{},train_loss:{:.4f},lr:{:.6f}".format(epoch + 1, args.epochs,
-                                                                                 train_loss/(batch_index+1),
+                                                                                 train_loss/((batch_index+1) * train_generator.batch_size),
                                                                                  optimizer.learning_rate.numpy()))
 
         train_generator.on_epoch_end()

@@ -66,7 +66,8 @@ class CubGenerator(tf.keras.utils.Sequence):
                                     [pad_width, size[1] - pad_width - resized_img.shape[1]], [0, 0]])
     def read_img(self, path):
         image = np.ascontiguousarray(Image.open(path).convert('RGB'))
-        return image[:, :, ::-1]
+        return image
+        # return image[:, :, ::-1]
     def on_epoch_end(self):
         if self.mode == 'train':
             np.random.shuffle(self.data_index)
