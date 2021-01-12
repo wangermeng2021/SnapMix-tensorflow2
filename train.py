@@ -37,12 +37,11 @@ def main(args):
     model = get_model(args, train_generator.num_class)
     train_generator.set_model(model.keras_model)
     loss_object = tf.keras.losses.CategoricalCrossentropy()
-    optimizer = tf.keras.optimizers.SGD(args.init_lr, 0.9)
+    optimizer = tf.keras.optimizers.SGD(args.init_lr, momentum=0.9, nesterov=True)
     # optimizer = tf.keras.optimizers.Adam(args.init_lr)
     lr_scheduler = get_lr_scheduler(args)
     best_val_loss = float('inf')
     best_val_acc = -1
-
     for epoch in range(args.epochs):
         lr = lr_scheduler(epoch)
         optimizer.learning_rate.assign(lr)
