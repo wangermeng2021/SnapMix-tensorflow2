@@ -28,6 +28,7 @@ def parse_args(args):
     parser.add_argument('--warmup-lr', default=1e-4, type=float)
     parser.add_argument('--warmup-epochs', default=0, type=int)
     parser.add_argument('--weight-decay', default=1e-4, type=float)
+    parser.add_argument('--start-val-epoch', default=50, type=int)
     return parser.parse_args(args)
 
 def main(args):
@@ -39,9 +40,8 @@ def main(args):
     optimizer = tf.keras.optimizers.SGD(args.init_lr, 0.9)
     # optimizer = tf.keras.optimizers.Adam(args.init_lr)
     lr_scheduler = get_lr_scheduler(args)
-    best_val_loss = 100000
+    best_val_loss = float('inf')
     best_val_acc = -1
-    start_val_epoch = 50
 
     for epoch in range(args.epochs):
         lr = lr_scheduler(epoch)
@@ -70,7 +70,7 @@ def main(args):
         train_generator.on_epoch_end()
 
         # validation
-        if epoch + 1 > start_val_epoch:
+        if epoch + 1 > args.start_val_epoch:
             val_loss = 0.
             val_acc = 0.
             val_generator_tqdm = tqdm(enumerate(val_generator), total=len(val_generator))
