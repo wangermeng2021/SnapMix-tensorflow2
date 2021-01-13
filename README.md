@@ -43,4 +43,5 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
   ```
 
 ## References
+* [https://github.com/Shaoli-Huang/SnapMix](https://github.com/Shaoli-Huang/SnapMix)
 * [SnapMix: Semantically Proportional Mixing for Augmenting Fine-grained Data](https://arxiv.org/abs/2012.04846)
