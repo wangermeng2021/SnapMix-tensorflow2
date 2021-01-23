@@ -7,6 +7,7 @@ def get_lr_scheduler(args):
             for index, val in enumerate(args.lr_decay_epoch):
                 if epoch < val:
                     return args.init_lr*args.lr_decay**index
+            return args.init_lr*args.lr_decay**len(args.lr_decay_epoch)
         return scheduler
     elif args.lr_scheduler == 'warmup_cosinedecay':
         def scheduler(epoch):
