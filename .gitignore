@@ -5,8 +5,6 @@ tmp
 *tmp
 *_tmp
 *_temp
-*.jpg
-*.png
 
 .idea/*
 *.h5

@@ -14,9 +14,10 @@ if physical_devices:
 
 def parse_args(args):
     parser = argparse.ArgumentParser(description='Simple training script for using snapmix .')
-    parser.add_argument('--epochs', default=100, type=int)
+    parser.add_argument('--epochs', default=300, type=int)
     parser.add_argument('--batch-size', default=16, type=int)
-    parser.add_argument('--dataset', default='cars', type=str, help="choices=['cub','cars']")
+    parser.add_argument('--dataset', default='custom', type=str, help="choices=['cub','cars','custom']")
+    parser.add_argument('--dataset-dir', default='dataset/cat_dog', type=str, help="choices=['dataset/cub','dataset/cars','custom_dataset_dir']")
     parser.add_argument('--augment', default='snapmix', type=str, help="choices=['baseline','cutmix','snapmix']")
     parser.add_argument('--model', default='ResNet50', type=str, help="choices=['ResNet50','ResNet101','EfficientNetB0']")
     parser.add_argument('--pretrain', default='imagenet', help="choices=[None,'imagenet','resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5']")
@@ -28,7 +29,7 @@ def parse_args(args):
     parser.add_argument('--warmup-lr', default=1e-4, type=float)
     parser.add_argument('--warmup-epochs', default=0, type=int)
     parser.add_argument('--weight-decay', default=1e-4, type=float)
-    parser.add_argument('--start-val-epoch', default=0, type=int)
+    parser.add_argument('--start-val-epoch', default=150, type=int)
     return parser.parse_args(args)
 
 def main(args):
@@ -41,6 +42,7 @@ def main(args):
     lr_scheduler = get_lr_scheduler(args)
     best_val_loss = float('inf')
     best_val_acc = -1
+    best_val_epoch = -1
     for epoch in range(args.epochs):
         lr = lr_scheduler(epoch)
         optimizer.learning_rate.assign(lr)
@@ -61,14 +63,14 @@ def main(args):
             optimizer.apply_gradients(zip(grads, model.keras_model.trainable_variables))
             train_loss += total_loss
             train_generator_tqdm.set_description(
-                "epoch:{}/{},train_loss:{:.4f},lr:{:.6f}".format(epoch + 1, args.epochs,
+                "epoch:{}/{},train_loss:{:.4f},lr:{:.6f}".format(epoch, args.epochs,
                                                                                  train_loss/((batch_index+1) * train_generator.batch_size),
                                                                                  optimizer.learning_rate.numpy()))
 
         train_generator.on_epoch_end()
 
         # validation
-        if epoch + 1 > args.start_val_epoch:
+        if epoch > args.start_val_epoch:
             val_loss = 0.
             val_acc = 0.
             val_generator_tqdm = tqdm(enumerate(val_generator), total=len(val_generator))
@@ -82,15 +84,15 @@ def main(args):
                             tf.dtypes.float32))
                 val_acc += val_true_num
                 val_generator_tqdm.set_description(
-                    "epoch:{},val_loss:{:.4f}".format(epoch + 1, loss_value))
+                    "epoch:{},val_loss:{:.4f}".format(epoch, loss_value))
             val_loss /= len(val_generator)
             val_acc /= (len(val_generator) * val_generator.batch_size)
             if val_loss < best_val_loss:
                 best_val_loss = val_loss
                 best_val_acc = val_acc
-                logging.info(
-                    "epoch:{},best_val_loss:{},best_val_acc:{}".format(
-                        epoch + 1, best_val_loss, best_val_acc))
+                best_val_epoch = epoch
+            logging.info("best_epoch:{},best_val_loss:{},best_val_acc:{}".format(best_val_epoch, best_val_loss, best_val_acc))
+
 if __name__== "__main__":
     args = parse_args(sys.argv[1:])
     main(args)

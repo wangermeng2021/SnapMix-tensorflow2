@@ -10,9 +10,8 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
   ```
 
 ###   2. Install environment
-  ```
-  pip install -r requirements.txt
-  ```
+* install tesnorflow ( skip this step if it's already installed)
+*     pip install -r requirements.txt
 
 ###   3. Download dataset
 * Download cub dataset
@@ -35,12 +34,47 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
 ## Training
 * For training on cub dataset,use:
   ```
-  python train.py --dataset cub
+  python train.py --dataset cub --dataset-dir dataset/cub
   ```
 * For training on Cars dataset,use:
   ```
-  python train.py --dataset car
+  python train.py --dataset cars --dataset-dir dataset/cars
   ```
+* For training on your custom dataset,use:
+  ```
+  python train.py --dataset custom --dataset-dir your_dataset_root_directory
+  ```
+  you can try it on a toy dataset(No need to download dataset,it's already included in project:dataset/cat_dog):
+  ```
+  python train.py --dataset custom --dataset-dir dataset/cat_dog
+  ```
+  your_dataset_root_directory:
+  train
+         class1_name
+                xxx.jpg
+                xxx.jpg
+                ...
+         class2_name
+                xxx.jpg
+                xxx.jpg
+                ...
+         ...
+  valid
+         class1_name
+                xxx.jpg
+                xxx.jpg
+                ...
+         class2_name
+                xxx.jpg
+                xxx.jpg
+                ...
+         ...
+## Evaluation results(GTX1070,epochs=300,batch_size=12):
+
+| model                  |  cat_dog  | cars | cub  |
+|------------------------|-----------|------|------|
+| resnet50+cutmix        |  0.967    |      |      |
+| resnet50+snapmix       |  0.989    |      |      |
 
 ## References
 * [https://github.com/Shaoli-Huang/SnapMix](https://github.com/Shaoli-Huang/SnapMix)
