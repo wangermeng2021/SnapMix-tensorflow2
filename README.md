@@ -73,8 +73,8 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
 
 | model                  |  cat_dog  | cars | cub  |
 |------------------------|-----------|------|------|
-| resnet50+cutmix        |  0.967    |      |      |
-| resnet50+snapmix       |  0.989    |      |      |
+| resnet50+cutmix        |  0.958    |      |      |
+| resnet50+snapmix       |  0.979    |      |      |
 
 ## References
 * [https://github.com/Shaoli-Huang/SnapMix](https://github.com/Shaoli-Huang/SnapMix)

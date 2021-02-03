@@ -15,6 +15,7 @@ if physical_devices:
 def parse_args(args):
     parser = argparse.ArgumentParser(description='Simple training script for using snapmix .')
     parser.add_argument('--epochs', default=300, type=int)
+    parser.add_argument('--start-val-epoch', default=100, type=int)
     parser.add_argument('--batch-size', default=16, type=int)
     parser.add_argument('--dataset', default='custom', type=str, help="choices=['cub','cars','custom']")
     parser.add_argument('--dataset-dir', default='dataset/cat_dog', type=str, help="choices=['dataset/cub','dataset/cars','custom_dataset_dir']")
@@ -23,13 +24,13 @@ def parse_args(args):
     parser.add_argument('--pretrain', default='imagenet', help="choices=[None,'imagenet','resnet50_weights_tf_dim_ordering_tf_kernels_notop.h5']")
     parser.add_argument('--concat-max-and-average-pool', default=False, type=bool,help="Use concat_max_and_average_pool layer in model")
     parser.add_argument('--lr-scheduler', default='warmup_cosinedecay', type=str, help="choices=['step','warmup_cosinedecay']")
-    parser.add_argument('--init-lr', default=1e-4, type=float)
+    parser.add_argument('--init-lr', default=1e-3, type=float)
     parser.add_argument('--lr-decay', default=0.1, type=float)
     parser.add_argument('--lr-decay-epoch', default=[80, 150, 180], type=int)
     parser.add_argument('--warmup-lr', default=1e-4, type=float)
     parser.add_argument('--warmup-epochs', default=0, type=int)
     parser.add_argument('--weight-decay', default=1e-4, type=float)
-    parser.add_argument('--start-val-epoch', default=150, type=int)
+    parser.add_argument('--optimizer', default='sgd', help="choices=['adam','sgd']")
     return parser.parse_args(args)
 
 def main(args):
@@ -38,7 +39,11 @@ def main(args):
     model = get_model(args, train_generator.num_class)
     train_generator.set_model(model.keras_model)
     loss_object = tf.keras.losses.CategoricalCrossentropy()
-    optimizer = tf.keras.optimizers.Adam(args.init_lr)
+    if args.optimizer == 'sgd':
+        optimizer = tf.keras.optimizers.SGD(args.init_lr,momentum=0.9)
+    else:
+        optimizer = tf.keras.optimizers.Adam(args.init_lr)
+
     lr_scheduler = get_lr_scheduler(args)
     best_val_loss = float('inf')
     best_val_acc = -1
