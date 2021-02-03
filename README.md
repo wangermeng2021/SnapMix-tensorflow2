@@ -48,28 +48,28 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
   ```
   python train.py --dataset custom --dataset-dir dataset/cat_dog
   ```
-  your_dataset_root_directory:
-  train
-         class1_name
-                xxx.jpg
-                xxx.jpg
-                ...
-         class2_name
-                xxx.jpg
-                xxx.jpg
-                ...
-         ...
-  valid
-         class1_name
-                xxx.jpg
-                xxx.jpg
-                ...
-         class2_name
-                xxx.jpg
-                xxx.jpg
-                ...
-         ...
-## Evaluation results(GTX1070,epochs=300,batch_size=12):
+  your_dataset_root_directory:  
+  train  
+ &nbsp; &nbsp; &nbsp; &nbsp; class1_name  
+ &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; xxx.jpg  
+ &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; xxx.jpg  
+ &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; ...  
+ &nbsp; &nbsp; &nbsp; &nbsp;class2_name  
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;xxx.jpg  
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;xxx.jpg  
+ &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...  
+ &nbsp; &nbsp;&nbsp; &nbsp; ...  
+  valid  
+  &nbsp; &nbsp;  &nbsp; &nbsp;class1_name  
+  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; xxx.jpg  
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;xxx.jpg  
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...  
+  &nbsp; &nbsp; &nbsp; &nbsp;class2_name  
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;xxx.jpg  
+  &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; xxx.jpg  
+  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...  
+  &nbsp; &nbsp; &nbsp; &nbsp;...  
+## Evaluation results(GTX2080,epochs=300,batch_size=16):
 
 | model                  |  cat_dog  | cars | cub  |
 |------------------------|-----------|------|------|
