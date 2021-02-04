@@ -69,7 +69,7 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
   &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; xxx.jpg  
   &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;...  
   &nbsp; &nbsp; &nbsp; &nbsp;...  
-## Evaluation results(GTX2080,epochs=300,batch_size=16):
+## Evaluation results(RTX2080,epochs=300,batch_size=16):
 
 | model                  |  cat_dog  | cars | cub  |
 |------------------------|-----------|------|------|
