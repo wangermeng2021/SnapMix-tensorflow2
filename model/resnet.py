@@ -12,7 +12,7 @@ class ResNet():
         self.keras_model = self.create_model()
     def preprocess(self, x, size=None, normalization_mode='caffe'):
         if size != None:
-            x = cv2.resize(x, size,interpolation=cv2.INTER_LINEAR)
+            x = tf.image.resize(x, size)
         return normalize_input(x, mode=normalization_mode)
     def create_model(self):
         input_layer = tf.keras.Input(shape=(None, None, 3))

@@ -1,7 +1,9 @@
 
-import numpy as np
+# import numpy as np
+import tensorflow as tf
 def normalize_input(x, mode='caffe'):
-    x = x.astype(np.float32)
+    # x = x.astype(np.float32)
+    x = tf.cast(x,tf.dtypes.float32)
     if mode == 'tf':
         x /= 127.5
         x -= 1.

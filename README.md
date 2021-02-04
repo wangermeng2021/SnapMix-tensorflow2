@@ -2,6 +2,18 @@
 # SnapMix-tensorflow2
 A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically Proportional Mixing for Augmenting Fine-grained Data](https://arxiv.org/abs/2012.04846)
 
+## Features
+- [x] mixup
+- [x] cutmix
+- [x] snapmix
+- [x] resnet50,resnet101
+- [x] efficientB0~B7
+- [x] warmup
+- [x] cosinedecay lr scheduler
+- [x] step lr scheduler
+- [x] concat-max-and-average-pool
+- [x] custom dataset training
+
 ## Installation
 ###  1. Clone project
   ``` 
@@ -34,19 +46,19 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
 ## Training
 * For training on cub dataset,use:
   ```
-  python train.py --dataset cub --dataset-dir dataset/cub
+  python train.py --dataset cub --dataset-dir dataset/cub --model EfficientNetB0 --augment snapmix
   ```
 * For training on Cars dataset,use:
   ```
-  python train.py --dataset cars --dataset-dir dataset/cars
+  python train.py --dataset cars --dataset-dir dataset/cars --model EfficientNetB0 --augment snapmix
   ```
 * For training on your custom dataset,use:
   ```
-  python train.py --dataset custom --dataset-dir your_dataset_root_directory
+  python train.py --dataset custom --dataset-dir your_dataset_root_directory  --model EfficientNetB0  --augment snapmix
   ```
   you can try it on a toy dataset(No need to download dataset,it's already included in project:dataset/cat_dog):
   ```
-  python train.py --dataset custom --dataset-dir dataset/cat_dog
+  python train.py --dataset custom --dataset-dir dataset/cat_dog --model EfficientNetB0  --augment snapmix
   ```
   your_dataset_root_directory:  
   train  
@@ -73,8 +85,14 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
 
 | model                  |  cat_dog  | cars | cub  |
 |------------------------|-----------|------|------|
+| resnet50+mixup         |      |      |      |
 | resnet50+cutmix        |  0.958    |      |      |
 | resnet50+snapmix       |  0.979    |      |      |
+| EfficientNetB0+mixup   |  0.968    |      |      |
+| EfficientNetB0+cutmix  |  0.979    |      |      |
+| EfficientNetB0+snapmix |  0.979    |      |      |
+| EfficientNetB3+cutmix  |  0.958    |      |      |
+| EfficientNetB3+snapmix |  1.0      |      |      |
 
 ## References
 * [https://github.com/Shaoli-Huang/SnapMix](https://github.com/Shaoli-Huang/SnapMix)
