@@ -46,19 +46,19 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
 ## Training
 * For training on cub dataset,use:
   ```
-  python train.py --dataset cub --dataset-dir dataset/cub --model EfficientNetB0 --augment snapmix
+  python train.py --dataset cub --dataset-dir dataset/cub --model ResNet50 --augment snapmix
   ```
 * For training on Cars dataset,use:
   ```
-  python train.py --dataset cars --dataset-dir dataset/cars --model EfficientNetB0 --augment snapmix
+  python train.py --dataset cars --dataset-dir dataset/cars --model ResNet50 --augment snapmix
   ```
 * For training on your custom dataset,use:
   ```
-  python train.py --dataset custom --dataset-dir your_dataset_root_directory  --model EfficientNetB0  --augment snapmix
+  python train.py --dataset custom --dataset-dir your_dataset_root_directory  --model ResNet50  --augment snapmix
   ```
   you can try it on a toy dataset(No need to download dataset,it's already included in project:dataset/cat_dog):
   ```
-  python train.py --dataset custom --dataset-dir dataset/cat_dog --model EfficientNetB0  --augment snapmix
+  python train.py --dataset custom --dataset-dir dataset/cat_dog --model ResNet50  --augment snapmix
   ```
   your_dataset_root_directory:  
   train  
