@@ -85,7 +85,6 @@ A Tensorflow2.x implementation of SnapMix as described in [SnapMix: Semantically
 
 | model                  |  cat_dog  | cars | cub  |
 |------------------------|-----------|------|------|
-| resnet50+mixup         |      |      |      |
 | resnet50+cutmix        |  0.958    |      |      |
 | resnet50+snapmix       |  0.979    |      |      |
 | EfficientNetB0+mixup   |  0.968    |      |      |
